@@ -8,8 +8,9 @@ let currentDeck = turnIntoArray(currentDeckNode);
 // create a new shuffled deck
 let shuffledDeck = shuffle(currentDeck);
 
-let resetButton = document.getElementsByClassName('restart');
+let resetButton = document.getElementsByClassName('restart')[0];
 log(resetButton);
+resetButton.addEventListener('click', function() { alert('Helllo!')}, false);
 
 // This function turns a node list into an array for manipulation
 function turnIntoArray(inputNodeList) {
