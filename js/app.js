@@ -10,7 +10,7 @@ let shuffledDeck = shuffle(currentDeck);
 
 let resetButton = document.getElementsByClassName('restart')[0];
 log(resetButton);
-resetButton.addEventListener('click', function() { alert('Helllo!')}, false);
+resetButton.addEventListener('click', function(){alert('hello')});
 
 // This function turns a node list into an array for manipulation
 function turnIntoArray(inputNodeList) {
@@ -55,6 +55,11 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+
+function resetGame() {
+    
+}
 
  function log(input) {
      console.log(input);
