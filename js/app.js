@@ -1,6 +1,7 @@
 /*
  * Create a list that holds all of your cards
  */
+let openList = [];
 
 let resetButton = document.getElementsByClassName('restart')[0];
 resetButton.addEventListener('click', resetGame);
@@ -66,6 +67,7 @@ function turnIntoArray(inputNodeList) {
     return arr;
 }
 
+// This function creates and returns a new fragment of shuffled cards
 function createNewDeck(incomingDeck) {
     // create a fragment to re-create the deck html
     const frag = document.createDocumentFragment();
@@ -78,6 +80,7 @@ function createNewDeck(incomingDeck) {
     return frag;
 }
 
+// This function deletes the old deck from the screen
 function deleteOldDeck() {
     var empty = deckClass.innerHTML = null;
     console.log(empty);
