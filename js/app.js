@@ -5,6 +5,8 @@
 let resetButton = document.getElementsByClassName('restart')[0];
 resetButton.addEventListener('click', resetGame);
 
+let deckClass = document.getElementsByClassName('deck');
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -48,8 +50,8 @@ function resetGame() {
     // create a new shuffled deck
     let shuffledDeck = shuffle(currentDeck);
     deleteOldDeck();
-    createNewDeck(shuffledDeck);
-    
+    let newDeck = createNewDeck(shuffledDeck);
+    deckClass.innerHTML = newDeck;
 }
 
  // This function turns a node list into an array for manipulation
@@ -67,6 +69,7 @@ function createNewDeck(incomingDeck) {
     incomingDeck.forEach(function(item) {
         let newElement = document.createElement('li');
         newElement.innerHTML = item;
+        newElement.setAttribute("class", "card");
         frag.appendChild(newElement);
     });
     log(frag);
