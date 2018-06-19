@@ -28,7 +28,6 @@ function shuffle(array) {
     return array;
 }
 
-
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -40,7 +39,6 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-
 function resetGame() {
     alert('Resetting game...');
     // Obtain current node list of deck
@@ -49,7 +47,9 @@ function resetGame() {
     let currentDeck = turnIntoArray(currentDeckNode);
     // create a new shuffled deck
     let shuffledDeck = shuffle(currentDeck);
+    deleteOldDeck();
     createNewDeck(shuffledDeck);
+    
 }
 
  // This function turns a node list into an array for manipulation
@@ -70,6 +70,11 @@ function createNewDeck(incomingDeck) {
         frag.appendChild(newElement);
     });
     log(frag);
+}
+
+function deleteOldDeck() {
+    var empty = document.getElementsByClassName('deck')[0].innerHTML = null;
+    log(empty);
 }
 
 function log(input) {
