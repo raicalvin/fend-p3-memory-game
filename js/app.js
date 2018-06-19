@@ -49,6 +49,7 @@ function resetGame() {
     let currentDeck = turnIntoArray(currentDeckNode);
     // create a new shuffled deck
     let shuffledDeck = shuffle(currentDeck);
+    createNewDeck(shuffledDeck);
 }
 
  // This function turns a node list into an array for manipulation
@@ -58,6 +59,17 @@ function turnIntoArray(inputNodeList) {
         arr.push(item.innerHTML);
     });
     return arr;
+}
+
+function createNewDeck(incomingDeck) {
+    // create a fragment to re-create the deck html
+    const frag = document.createDocumentFragment();
+    incomingDeck.forEach(function(item) {
+        let newElement = document.createElement('li');
+        newElement.innerHTML = item;
+        frag.appendChild(newElement);
+    });
+    log(frag);
 }
 
 function log(input) {
