@@ -1,25 +1,9 @@
 /*
  * Create a list that holds all of your cards
  */
-// Obtain current node list of deck
-let currentDeckNode = document.querySelectorAll('.card');
-// turn node list into array
-let currentDeck = turnIntoArray(currentDeckNode);
-// create a new shuffled deck
-let shuffledDeck = shuffle(currentDeck);
 
 let resetButton = document.getElementsByClassName('restart')[0];
-log(resetButton);
-resetButton.addEventListener('click', function(){alert('hello')});
-
-// This function turns a node list into an array for manipulation
-function turnIntoArray(inputNodeList) {
-    let arr = [];
-    inputNodeList.forEach(function(item) {
-        arr.push(item.innerHTML);
-    });
-    return arr;
-}
+resetButton.addEventListener('click', resetGame);
 
 /*
  * Display the cards on the page
@@ -58,9 +42,24 @@ function shuffle(array) {
 
 
 function resetGame() {
-    
+    alert('Resetting game...');
+    // Obtain current node list of deck
+    let currentDeckNode = document.querySelectorAll('.card');
+    // turn node list into array
+    let currentDeck = turnIntoArray(currentDeckNode);
+    // create a new shuffled deck
+    let shuffledDeck = shuffle(currentDeck);
 }
 
- function log(input) {
-     console.log(input);
- }
+ // This function turns a node list into an array for manipulation
+function turnIntoArray(inputNodeList) {
+    let arr = [];
+    inputNodeList.forEach(function(item) {
+        arr.push(item.innerHTML);
+    });
+    return arr;
+}
+
+function log(input) {
+    console.log(input);
+}
