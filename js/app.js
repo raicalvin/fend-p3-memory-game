@@ -5,7 +5,7 @@
 let resetButton = document.getElementsByClassName('restart')[0];
 resetButton.addEventListener('click', resetGame);
 
-let deckClass = document.getElementsByClassName('deck');
+let deckClass = document.getElementsByClassName('deck')[0];
 
 /*
  * Display the cards on the page
@@ -42,16 +42,19 @@ function shuffle(array) {
  */
 
 function resetGame() {
-    alert('Resetting game...');
+    console.log('Resetting game...');
     // Obtain current node list of deck
     let currentDeckNode = document.querySelectorAll('.card');
     // turn node list into array
     let currentDeck = turnIntoArray(currentDeckNode);
     // create a new shuffled deck
     let shuffledDeck = shuffle(currentDeck);
+    // delete the old cards on deck
     deleteOldDeck();
+    // create a new document fragment
     let newDeck = createNewDeck(shuffledDeck);
-    deckClass.innerHTML = newDeck;
+    // get the document element for the deck
+    deckClass.appendChild(newDeck);
 }
 
  // This function turns a node list into an array for manipulation
@@ -69,17 +72,13 @@ function createNewDeck(incomingDeck) {
     incomingDeck.forEach(function(item) {
         let newElement = document.createElement('li');
         newElement.innerHTML = item;
-        newElement.setAttribute("class", "card");
+        newElement.setAttribute("class", "card open show");
         frag.appendChild(newElement);
     });
-    log(frag);
+    return frag;
 }
 
 function deleteOldDeck() {
-    var empty = document.getElementsByClassName('deck')[0].innerHTML = null;
-    log(empty);
-}
-
-function log(input) {
-    console.log(input);
+    var empty = deckClass.innerHTML = null;
+    console.log(empty);
 }
