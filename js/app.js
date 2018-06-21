@@ -8,6 +8,53 @@ resetButton.addEventListener('click', resetGame);
 
 let deckClass = document.getElementsByClassName('deck')[0];
 
+let stars = document.getElementsByClassName('score-panel')[0];
+
+deckClass.addEventListener('click', function(e) {
+    var target = e.target;
+
+    if (target.className == 'card open show') {
+        console.log('Hey, you cannot touch the same card!');
+    }
+
+    console.log(target);
+    if (target.className == 'card matched') {
+        return;
+    }
+    if (e.target.nodeName == 'LI') {
+        // start matching opertation
+        target.setAttribute('class', 'card open show');
+        openList.push(target.childNodes[1]);
+        if (openList.length == 2) {
+            checkMatch(openList);
+            openList.length = 0; // does not create new array
+        }
+    };
+});
+
+function checkMatch(openList) {
+    var item1 = openList[0];
+    var item2 = openList[1];    
+    if (openList[0].className == openList[1].className) {
+        console.log('Yes, they match!');
+        openList[0].parentElement.setAttribute('class', 'card match');
+        openList[1].parentElement.setAttribute('class', 'card match');
+        console.log(openList);
+    } else {
+        var delayInMilliseconds = 1000; //1 second
+        setTimeout(function() {
+            // your code to be executed after 1 second
+            // dont pass in openList since function hoisting will clear contents 
+            item1.parentElement.setAttribute('class', 'card');
+            item2.parentElement.setAttribute('class', 'card');
+        }, delayInMilliseconds);
+        
+        
+    }
+    // openList[1].className = "card open";
+}
+
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -74,7 +121,7 @@ function createNewDeck(incomingDeck) {
     incomingDeck.forEach(function(item) {
         let newElement = document.createElement('li');
         newElement.innerHTML = item;
-        newElement.setAttribute("class", "card open show");
+        newElement.setAttribute("class", "card");
         frag.appendChild(newElement);
     });
     return frag;
