@@ -26,13 +26,18 @@ function resetGame() {
     let newDeck = createNewDeck(shuffledDeck);
     // add the new shuffled deck fragment to the empty deck:
     deckClass.appendChild(newDeck);
+    // reset number of matching pairs left:
+    remainingMatchPairsLeft = pairsToMatch;
 }
 
 // Element that holds all the cards displayed on screen
 let deckClass = document.getElementsByClassName('deck')[0];
 
+// Pairs of cards to match in this game
+let pairsToMatch = deckClass.childElementCount / 2;
+
 // The remaining pairs of cards to match
-let remainingMatchPairsLeft = deckClass.childElementCount / 2;
+let remainingMatchPairsLeft = pairsToMatch;
 
 // Count the number of clicks the user has made from start of game
 let numberOfClicksMade = 0;
