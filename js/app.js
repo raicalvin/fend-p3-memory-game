@@ -1,58 +1,85 @@
-/*
- * Create a list that holds all of your cards
+/**
+ * Empty array to store 2 clicked cards
  */
 let openList = [];
 
+/**
+ * Add Event Listener to the Reset button
+ */
 let resetButton = document.getElementsByClassName('restart')[0];
 resetButton.addEventListener('click', resetGame);
 
+/**
+ * Function to reset game when Reset button is clicked
+ */
+function resetGame() {
+    console.log('Resetting game...');
+    // Obtain current node list of deck:
+    let currentDeckNode = document.querySelectorAll('.card');
+    // turn node list into array:
+    let currentDeck = turnIntoArray(currentDeckNode);
+    // create a new shuffled deck:
+    let shuffledDeck = shuffle(currentDeck);
+    // delete the old cards on deck:
+    deleteOldDeck();
+    // create a new document fragment:
+    let newDeck = createNewDeck(shuffledDeck);
+    // add the new shuffled deck fragment to the empty deck:
+    deckClass.appendChild(newDeck);
+}
+
+// Element that holds all the cards displayed on screen
 let deckClass = document.getElementsByClassName('deck')[0];
 
-let stars = document.getElementsByClassName('score-panel')[0];
+// The remaining pairs of cards to match
+let remainingMatchPairsLeft = deckClass.childElementCount / 2;
 
+// Count the number of clicks the user has made from start of game
+let numberOfClicksMade = 0;
+
+// Event when user clicks on the screen
 deckClass.addEventListener('click', function(e) {
-    var target = e.target;
-
-    if (target.className == 'card open show') {
-        console.log('Hey, you cannot touch the same card!');
+    var target = e.target; // this is the click target for the card
+    if (target.className != 'card open show' && target.className != 'card match') { // ensures click is not on an OPEN or MATCHED card
+        if (e.target.nodeName == 'LI') {
+            numberOfClicksMade++;
+            target.setAttribute('class', 'card open show');
+            openList.push(target.childNodes[1]);
+            if (openList.length == 2) {
+                checkMatch(openList);
+                openList.length = 0; // does not create new array
+            }
+        };
     }
-
-    console.log(target);
-    if (target.className == 'card matched') {
-        return;
-    }
-    if (e.target.nodeName == 'LI') {
-        // start matching opertation
-        target.setAttribute('class', 'card open show');
-        openList.push(target.childNodes[1]);
-        if (openList.length == 2) {
-            checkMatch(openList);
-            openList.length = 0; // does not create new array
-        }
-    };
 });
 
 function checkMatch(openList) {
     var item1 = openList[0];
     var item2 = openList[1];    
-    if (openList[0].className == openList[1].className) {
+    if (openList[0].className == openList[1].className) { // CARDS MATCH
         console.log('Yes, they match!');
         openList[0].parentElement.setAttribute('class', 'card match');
         openList[1].parentElement.setAttribute('class', 'card match');
+        remainingMatchPairsLeft -= 1; // pairs left to match
+        if (!remainingMatchPairsLeft) {
+            console.log('Yay you win the game!')
+        } else {
+            console.log(`You have ${remainingMatchPairsLeft} pairs left!`);
+        }
         console.log(openList);
-    } else {
+    } else { // CARDS DO NOT MATCH
         var delayInMilliseconds = 1000; //1 second
         setTimeout(function() {
             // your code to be executed after 1 second
             // dont pass in openList since function hoisting will clear contents 
             item1.parentElement.setAttribute('class', 'card');
             item2.parentElement.setAttribute('class', 'card');
-        }, delayInMilliseconds);
-        
-        
+        }, delayInMilliseconds); 
     }
     // openList[1].className = "card open";
 }
+
+let stars = document.getElementsByClassName('score-panel')[0];
 
 
 /*
@@ -89,21 +116,7 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-function resetGame() {
-    console.log('Resetting game...');
-    // Obtain current node list of deck
-    let currentDeckNode = document.querySelectorAll('.card');
-    // turn node list into array
-    let currentDeck = turnIntoArray(currentDeckNode);
-    // create a new shuffled deck
-    let shuffledDeck = shuffle(currentDeck);
-    // delete the old cards on deck
-    deleteOldDeck();
-    // create a new document fragment
-    let newDeck = createNewDeck(shuffledDeck);
-    // get the document element for the deck
-    deckClass.appendChild(newDeck);
-}
+
 
  // This function turns a node list into an array for manipulation
 function turnIntoArray(inputNodeList) {
