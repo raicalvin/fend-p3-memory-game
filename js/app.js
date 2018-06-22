@@ -26,6 +26,10 @@ function resetGame() {
     let newDeck = createNewDeck(shuffledDeck);
     // add the new shuffled deck fragment to the empty deck:
     deckClass.appendChild(newDeck);
+    // reset number of clicks to 0:
+    numberOfClicksMade = 0;
+    // reset moves to 0
+    moveCounter.textContent = numberOfClicksMade;
     // reset number of matching pairs left:
     remainingMatchPairsLeft = pairsToMatch;
 }
@@ -39,6 +43,10 @@ let pairsToMatch = deckClass.childElementCount / 2;
 // The remaining pairs of cards to match
 let remainingMatchPairsLeft = pairsToMatch;
 
+// Element that updates number of moves
+let moveCounter = document.getElementsByClassName('moves')[0];
+console.log(moveCounter);
+
 // Count the number of clicks the user has made from start of game
 let numberOfClicksMade = 0;
 
@@ -48,6 +56,13 @@ deckClass.addEventListener('click', function(e) {
     if (target.className != 'card open show' && target.className != 'card match') { // ensures click is not on an OPEN or MATCHED card
         if (e.target.nodeName == 'LI') {
             numberOfClicksMade++;
+            moveCounter.textContent = numberOfClicksMade;
+            if (numberOfClicksMade > 18) {
+                // star level decrease to 2
+            } else if (numberOfClicksMade > 30) {
+                // star level decrease to 1
+            }
+            console.log(`So far you clicked this many times: ${numberOfClicksMade}`)
             target.setAttribute('class', 'card open show');
             openList.push(target.childNodes[1]);
             if (openList.length == 2) {
@@ -68,6 +83,7 @@ function checkMatch(openList) {
         remainingMatchPairsLeft -= 1; // pairs left to match
         if (!remainingMatchPairsLeft) {
             console.log('Yay you win the game!')
+            winGame();
         } else {
             console.log(`You have ${remainingMatchPairsLeft} pairs left!`);
         }
@@ -84,8 +100,15 @@ function checkMatch(openList) {
     // openList[1].className = "card open";
 }
 
-let stars = document.getElementsByClassName('score-panel')[0];
-
+function winGame() {
+    // this function is called when the game is complete
+    // ask if user wants to play again
+    if (true) {
+        // reset game
+    } else {
+        // nothing
+    }
+}
 
 /*
  * Display the cards on the page
