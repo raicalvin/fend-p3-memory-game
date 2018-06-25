@@ -9,6 +9,10 @@ var timerMinutes = 0;
 var timerHours = 0;
 var starLevel = 3;
 
+let star1 = document.getElementsByClassName('star-1')[0];
+let star2 = document.getElementsByClassName('star-2')[0];
+let star3 = document.getElementsByClassName('star-3')[0];
+
 let timerDisplayOnScreen = document.getElementsByClassName('timer')[0];
 
 /**
@@ -50,12 +54,13 @@ function resetGame() {
     remainingMatchPairsLeft = pairsToMatch;
     // Timer display clock
     timerDisplayOnScreen.textContent = "00:00:00";
-    clearInterval(timeDisplay);
-    timerSeconds = 0;
-    timerHours = 0;
-    timerMinutes = 0;
     // Close modal if open
     closeModal();
+    // Reset star colors and points
+    starLevel = 3;
+    star1.style.color = 'black';
+    star2.style.color = 'black';
+    star3.style.color = 'black';
 
 }
 
@@ -87,14 +92,14 @@ deckClass.addEventListener('click', function(e) {
             moveCounter.textContent = numberOfClicksMade;
             if (numberOfClicksMade == 19) {
                 // star level decrease to 2
-                document.getElementsByClassName('star-3')[0].style.color = 'gray';
+                star3.style.color = 'gray';
                 starLevel--;
             } else if (numberOfClicksMade == 31) {
                 // star level decrease to 1
-                document.getElementsByClassName('star-2')[0].style.color = 'gray';
+                star2.style.color = 'gray';
                 starLevel--;
             } else if (numberOfClicksMade == 46) {
-                document.getElementsByClassName('star-1')[0].style.color = 'gray';
+                star1.style.color = 'gray';
                 starLevel--;
             }
             console.log(`So far you clicked this many times: ${numberOfClicksMade}`)
@@ -223,6 +228,10 @@ let resultParagraph = document.getElementsByClassName('result-paragraph')[0];
 // function to open modal when game finishes
 function openModal() {
     gameModal.style.display = 'block'
+    timerSeconds = 0;
+    timerHours = 0;
+    timerMinutes = 0;
+    clearInterval(timeDisplay);
 }
 
 function closeModal() {
