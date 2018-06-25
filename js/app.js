@@ -7,12 +7,18 @@ var timeDisplay;
 var timerSeconds = 0;
 var timerMinutes = 0;
 var timerHours = 0;
-var starLevel = 3;
 
+/**
+ * Variables for stars and star score level
+ */
+var starLevel = 3;
 let star1 = document.getElementsByClassName('star-1')[0];
 let star2 = document.getElementsByClassName('star-2')[0];
 let star3 = document.getElementsByClassName('star-3')[0];
 
+/**
+ * Timer element on screen
+ */
 let timerDisplayOnScreen = document.getElementsByClassName('timer')[0];
 
 /**
@@ -21,11 +27,14 @@ let timerDisplayOnScreen = document.getElementsByClassName('timer')[0];
 let openList = [];
 
 /**
- * Add Event Listener to the Reset button
+ * Event listener for reset button
  */
 let resetButton = document.getElementsByClassName('restart')[0];
 resetButton.addEventListener('click', resetGame);
 
+/**
+ * Event listener for playAgain button
+ */
 let playAgain = document.getElementsByClassName('play-again')[0];
 playAgain.addEventListener('click', resetGame);
 
@@ -61,7 +70,6 @@ function resetGame() {
     star1.style.color = 'black';
     star2.style.color = 'black';
     star3.style.color = 'black';
-
 }
 
 // Element that holds all the cards displayed on screen
@@ -75,7 +83,6 @@ let remainingMatchPairsLeft = pairsToMatch;
 
 // Element that updates number of moves
 let moveCounter = document.getElementsByClassName('moves')[0];
-console.log(moveCounter);
 
 // Count the number of clicks the user has made from start of game
 let numberOfClicksMade = 0;
@@ -84,8 +91,8 @@ let numberOfClicksMade = 0;
 deckClass.addEventListener('click', function(e) {
     var target = e.target; // this is the click target for the card
     if (target.className != 'card open show' && target.className != 'card match') { // ensures click is not on an OPEN or MATCHED card
-        if (e.target.nodeName == 'LI') {
-            if (numberOfClicksMade == 0) {
+        if (e.target.nodeName == 'LI') { // make sure click is on li-item
+            if (numberOfClicksMade == 0) { // start timer
                 timeDisplay = setInterval(myTimer, 1000);
             }
             numberOfClicksMade++;
@@ -99,10 +106,10 @@ deckClass.addEventListener('click', function(e) {
                 star2.style.color = 'gray';
                 starLevel--;
             } else if (numberOfClicksMade == 46) {
+                // star level decreases to 0
                 star1.style.color = 'gray';
                 starLevel--;
             }
-            console.log(`So far you clicked this many times: ${numberOfClicksMade}`)
             target.setAttribute('class', 'card open show');
             openList.push(target.childNodes[1]);
             if (openList.length == 2) {
@@ -113,6 +120,9 @@ deckClass.addEventListener('click', function(e) {
     }
 });
 
+/**
+ * Timer function to calculate and display time
+ */
 function myTimer() {
     timerSeconds++;
     if (timerSeconds == 60) {
@@ -141,21 +151,22 @@ function myTimer() {
     timerDisplayOnScreen.textContent = `${extraHourZero}${timerHours}:${extraMinuteZero}${timerMinutes}:${extraSecondZero}${timerSeconds}`;
 };
 
+/**
+ * Function to check if the two clicked open cards match
+ * @param {*} openList Array holding two cards that are currently open
+ */
 function checkMatch(openList) {
     var item1 = openList[0];
     var item2 = openList[1];    
     if (openList[0].className == openList[1].className) { // CARDS MATCH
-        console.log('Yes, they match!');
         openList[0].parentElement.setAttribute('class', 'card match');
         openList[1].parentElement.setAttribute('class', 'card match');
         remainingMatchPairsLeft -= 1; // pairs left to match
         if (!remainingMatchPairsLeft) {
-            console.log('Yay you win the game!')
             winGame();
         } else {
             console.log(`You have ${remainingMatchPairsLeft} pairs left!`);
         }
-        console.log(openList);
     } else { // CARDS DO NOT MATCH
         setTimeout(function() {
             // dont pass in openList since function hoisting will clear contents 
@@ -165,9 +176,11 @@ function checkMatch(openList) {
     }
 }
 
+/**
+ * Once game is finished, display the result and open the modal
+ */
 function winGame() {
     let totalTime = timerDisplayOnScreen.textContent;
-    
     displayResult(totalTime, numberOfClicksMade, starLevel);
     openModal();
 }
@@ -220,9 +233,7 @@ let gameModal = document.getElementById('gameModal');
 
 // get the span element that closes the modal
 let closeButton = document.getElementsByClassName('close')[0];
-
 closeButton.addEventListener("click", closeModal);
-
 let resultParagraph = document.getElementsByClassName('result-paragraph')[0];
 
 // function to open modal when game finishes
@@ -235,7 +246,6 @@ function openModal() {
 }
 
 function closeModal() {
-    console.log('I got clicked!')
     gameModal.style.display = 'none'
 }
 
