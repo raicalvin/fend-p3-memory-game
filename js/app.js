@@ -1,4 +1,17 @@
 /**
+ * Variable declarations for timer
+ */
+let timeStart;
+let timeEnd;
+var timeDisplay;
+var timerSeconds = 0;
+var timerMinutes = 0;
+var timerHours = 0;
+var starLevel = 3;
+
+let timerDisplayOnScreen = document.getElementsByClassName('timer')[0];
+
+/**
  * Empty array to store 2 clicked cards
  */
 let openList = [];
@@ -8,6 +21,9 @@ let openList = [];
  */
 let resetButton = document.getElementsByClassName('restart')[0];
 resetButton.addEventListener('click', resetGame);
+
+let playAgain = document.getElementsByClassName('play-again')[0];
+playAgain.addEventListener('click', resetGame);
 
 /**
  * Function to reset game when Reset button is clicked
@@ -32,6 +48,15 @@ function resetGame() {
     moveCounter.textContent = numberOfClicksMade;
     // reset number of matching pairs left:
     remainingMatchPairsLeft = pairsToMatch;
+    // Timer display clock
+    timerDisplayOnScreen.textContent = "00:00:00";
+    clearInterval(timeDisplay);
+    timerSeconds = 0;
+    timerHours = 0;
+    timerMinutes = 0;
+    // Close modal if open
+    closeModal();
+
 }
 
 // Element that holds all the cards displayed on screen
@@ -55,12 +80,22 @@ deckClass.addEventListener('click', function(e) {
     var target = e.target; // this is the click target for the card
     if (target.className != 'card open show' && target.className != 'card match') { // ensures click is not on an OPEN or MATCHED card
         if (e.target.nodeName == 'LI') {
+            if (numberOfClicksMade == 0) {
+                timeDisplay = setInterval(myTimer, 1000);
+            }
             numberOfClicksMade++;
             moveCounter.textContent = numberOfClicksMade;
-            if (numberOfClicksMade > 18) {
+            if (numberOfClicksMade == 19) {
                 // star level decrease to 2
-            } else if (numberOfClicksMade > 30) {
+                document.getElementsByClassName('star-3')[0].style.color = 'gray';
+                starLevel--;
+            } else if (numberOfClicksMade == 31) {
                 // star level decrease to 1
+                document.getElementsByClassName('star-2')[0].style.color = 'gray';
+                starLevel--;
+            } else if (numberOfClicksMade == 46) {
+                document.getElementsByClassName('star-1')[0].style.color = 'gray';
+                starLevel--;
             }
             console.log(`So far you clicked this many times: ${numberOfClicksMade}`)
             target.setAttribute('class', 'card open show');
@@ -72,6 +107,34 @@ deckClass.addEventListener('click', function(e) {
         };
     }
 });
+
+function myTimer() {
+    timerSeconds++;
+    if (timerSeconds == 60) {
+        timerSeconds = 0;
+        timerMinutes++;
+        if (timerMinutes == 60) {
+            timerMinutes = 0;
+            timerHours++;
+        }
+    }
+
+    let extraSecondZero = 0;
+    let extraMinuteZero = 0;
+    let extraHourZero = 0;
+
+    if (timerSeconds > 9) {
+        extraSecondZero = "";
+    }
+    if (timerMinutes > 9) {
+        extraMinuteZero = "";
+    }
+    if (timerHours > 9) {
+        extraHourZero = "";
+    }
+
+    timerDisplayOnScreen.textContent = `${extraHourZero}${timerHours}:${extraMinuteZero}${timerMinutes}:${extraSecondZero}${timerSeconds}`;
+};
 
 function checkMatch(openList) {
     var item1 = openList[0];
@@ -89,39 +152,24 @@ function checkMatch(openList) {
         }
         console.log(openList);
     } else { // CARDS DO NOT MATCH
-        var delayInMilliseconds = 1000; //1 second
         setTimeout(function() {
-            // your code to be executed after 1 second
             // dont pass in openList since function hoisting will clear contents 
             item1.parentElement.setAttribute('class', 'card');
             item2.parentElement.setAttribute('class', 'card');
-        }, delayInMilliseconds); 
+        }, 1000); 
     }
-    // openList[1].className = "card open";
 }
 
 function winGame() {
-    // this function is called when the game is complete
-    // ask if user wants to play again
-    if (true) {
-        // reset game
-    } else {
-        // nothing
-    }
+    let totalTime = timerDisplayOnScreen.textContent;
+    
+    displayResult(totalTime, numberOfClicksMade, starLevel);
+    openModal();
 }
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- *   - good place to use fragments
- */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
-
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -129,22 +177,8 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
-
 
  // This function turns a node list into an array for manipulation
 function turnIntoArray(inputNodeList) {
@@ -172,4 +206,34 @@ function createNewDeck(incomingDeck) {
 function deleteOldDeck() {
     var empty = deckClass.innerHTML = null;
     console.log(empty);
+}
+
+// MODAL CODE
+
+// get the modal
+let gameModal = document.getElementById('gameModal');
+
+// get the span element that closes the modal
+let closeButton = document.getElementsByClassName('close')[0];
+
+closeButton.addEventListener("click", closeModal);
+
+let resultParagraph = document.getElementsByClassName('result-paragraph')[0];
+
+// function to open modal when game finishes
+function openModal() {
+    gameModal.style.display = 'block'
+}
+
+function closeModal() {
+    console.log('I got clicked!')
+    gameModal.style.display = 'none'
+}
+
+function displayResult(time, clicks, stars) {
+    
+    let result = `Congrats! You finished the game in ${time} with a total of ${clicks} clicks resulting in ${stars} stars!\n\nWould you like to play again?`;
+
+    resultParagraph.textContent = result;
+
 }
