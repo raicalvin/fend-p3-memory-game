@@ -151,3 +151,30 @@ h1 {
 .timer {
     padding-left: 12px;
 }
+
+@media screen and (min-width: 360px) {
+    .deck {
+        width: 340px;
+        min-height: 360px;
+    }
+    .deck .card {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media screen and (min-width: 720px) {
+    .deck {
+        width: 660px;
+    }
+    .deck .card {
+        width: 125px;
+        height: 125px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .deck {
+        width: 800px;
+    }
+}
