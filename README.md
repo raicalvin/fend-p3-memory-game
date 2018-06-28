@@ -16,7 +16,11 @@ Include information about the concepts, technologies, packages, and frameworks u
 
 ## User Interface
 
-![](http://placekitten.com/200/200)
+![](https://github.com/raicalvin/pictures/blob/master/pix-fend-p3-memory-game/pic1.png)
+
+![](https://github.com/raicalvin/pictures/blob/master/pix-fend-p3-memory-game/pic2.png)
+
+![](https://github.com/raicalvin/pictures/blob/master/pix-fend-p3-memory-game/pic3.png)
 
 ## Getting Started
 
