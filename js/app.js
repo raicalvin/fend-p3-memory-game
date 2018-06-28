@@ -57,6 +57,8 @@ function resetGame() {
     deckClass.appendChild(newDeck);
     // reset number of clicks to 0:
     numberOfClicksMade = 0;
+    // reset number of moves made to 0
+    numberOfMovesMade = 0;
     // reset moves to 0
     moveCounter.textContent = numberOfClicksMade;
     // reset number of matching pairs left:
@@ -83,8 +85,9 @@ let remainingMatchPairsLeft = pairsToMatch;
 // Element that updates number of moves
 let moveCounter = document.getElementsByClassName('moves')[0];
 
-// Count the number of clicks the user has made from start of game
+// Count the number of clicks and moves the user has made from start of game
 let numberOfClicksMade = 0;
+let numberOfMovesMade = 0;
 
 // Event when user clicks on the screen
 deckClass.addEventListener('click', function(e) {
@@ -95,7 +98,10 @@ deckClass.addEventListener('click', function(e) {
                 timeDisplay = setInterval(myTimer, 1000);
             }
             numberOfClicksMade++;
-            moveCounter.textContent = numberOfClicksMade;
+            if (numberOfClicksMade % 2 == 0) {
+                numberOfMovesMade++;
+            }
+            moveCounter.textContent = numberOfMovesMade;
             if (numberOfClicksMade == 19) {
                 // star level decrease to 2
                 star3.style.color = 'gray';
@@ -176,7 +182,7 @@ function checkMatch(openList) {
  */
 function winGame() {
     let totalTime = timerDisplayOnScreen.textContent;
-    displayResult(totalTime, numberOfClicksMade, starLevel);
+    displayResult(totalTime, numberOfMovesMade, starLevel);
     openModal();
 }
 
@@ -244,11 +250,11 @@ function closeModal() {
     gameModal.style.display = 'none'
 }
 
-function displayResult(time, clicks, stars) {
+function displayResult(time, moves, stars) {
     
     let starsText = stars === 1 ? 'star':'stars';
 
-    let result = `Congrats! You finished the game in ${time} with a total of ${clicks} clicks resulting in ${stars} ${starsText}!\n\nWould you like to play again?`;
+    let result = `Congrats! You finished the game in ${time} with a total of ${moves} moves resulting in ${stars} ${starsText}!\n\nWould you like to play again?`;
 
     resultParagraph.textContent = result;
 
