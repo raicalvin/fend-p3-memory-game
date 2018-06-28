@@ -1,20 +1,45 @@
-# Memory Game Project
+# Website: Memory Game
 
-## Table of Contents
+## Project Information
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+### About
 
-## Instructions
+This project was developed for my Front-End Developer Nanodegree from Udacity. In this project, we were tasked to create a classic card-flipping memory game. The game utilized query selectors and DOM manipulation through JavaScript to construct the logic behind the game: keeping track of matched pairs, number of moves made, a star rating, and a timer.
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+### Concepts
 
-To get started, open `js/app.js` and start building out the app's functionality
+Include information about the concepts, technologies, packages, and frameworks used to develop the project
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+- JavaScript was used to program the logic behind the game
+- Media queries were used to make the game responsiveness across a range of screen sizes
+- Query methods and DOM manipulation were used to implement the interactivity of the application
 
-## Contributing
+## Getting Started
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+### Downloading
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+You can download the project files from GitHub using:
+
+```
+git clone https://github.com/raicalvin/fend-p3-memory-game.git
+```
+
+### Running
+
+Open the project directory and click index.html to run the application through a browser
+
+```
+index.html
+```
+
+## Authors
+
+- Calvin S Rai - *JavaScript Development* - [GitHub](https://github.com/raicalvin)
+
+## Contact
+
+My name is Calvin! :]
+
+Check out my other work here on [GitHub](https://github.com/raicalvin).
+
+You can also reach me by [email](mailto:raicalvin@gmail.com)!
