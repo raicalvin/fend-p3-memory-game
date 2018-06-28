@@ -105,10 +105,6 @@ deckClass.addEventListener('click', function(e) {
                 // star level decrease to 1
                 star2.style.color = 'gray';
                 starLevel--;
-            } else if (numberOfClicksMade == 46) {
-                // star level decreases to 0
-                star1.style.color = 'gray';
-                starLevel--;
             }
             target.setAttribute('class', 'card open show');
             openList.push(target.childNodes[1]);
