@@ -1,4 +1,4 @@
-# Website: Memory Game
+# Web App: Memory Game
 
 ## Project Information
 
