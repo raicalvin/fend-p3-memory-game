@@ -14,6 +14,10 @@ Include information about the concepts, technologies, packages, and frameworks u
 - Media queries were used to make the game responsiveness across a range of screen sizes
 - Query methods and DOM manipulation were used to implement the interactivity of the application
 
+## User Interface
+
+![](http://placekitten.com/200/200)
+
 ## Getting Started
 
 ### Downloading
@@ -31,6 +35,10 @@ Open the project directory and click index.html to run the application through a
 ```
 index.html
 ```
+
+### How to Play
+
+Click on any card and the timer will begin. Match card pairs together by selecting card with matching symbols. If a pair does not match, the cards will be turnd over. If they do match, the matching pair will remain open. Match all symbols in the card deck to win!
 
 ## Authors
 
