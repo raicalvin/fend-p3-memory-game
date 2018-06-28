@@ -67,7 +67,6 @@ function resetGame() {
     closeModal();
     // Reset star colors and points
     starLevel = 3;
-    star1.style.color = 'black';
     star2.style.color = 'black';
     star3.style.color = 'black';
 }
@@ -247,7 +246,9 @@ function closeModal() {
 
 function displayResult(time, clicks, stars) {
     
-    let result = `Congrats! You finished the game in ${time} with a total of ${clicks} clicks resulting in ${stars} stars!\n\nWould you like to play again?`;
+    let starsText = stars === 1 ? 'star':'stars';
+
+    let result = `Congrats! You finished the game in ${time} with a total of ${clicks} clicks resulting in ${stars} ${starsText}!\n\nWould you like to play again?`;
 
     resultParagraph.textContent = result;
 
