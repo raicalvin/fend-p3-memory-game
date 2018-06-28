@@ -3,15 +3,15 @@
  */
 let timeStart;
 let timeEnd;
-var timeDisplay;
-var timerSeconds = 0;
-var timerMinutes = 0;
-var timerHours = 0;
+let timeDisplay;
+let timerSeconds = 0;
+let timerMinutes = 0;
+let timerHours = 0;
 
 /**
  * Variables for stars and star score level
  */
-var starLevel = 3;
+let starLevel = 3;
 let star1 = document.getElementsByClassName('star-1')[0];
 let star2 = document.getElementsByClassName('star-2')[0];
 let star3 = document.getElementsByClassName('star-3')[0];
@@ -91,7 +91,7 @@ let numberOfMovesMade = 0;
 
 // Event when user clicks on the screen
 deckClass.addEventListener('click', function(e) {
-    var target = e.target; // this is the click target for the card
+    let target = e.target; // this is the click target for the card
     if (target.className != 'card open show' && target.className != 'card match') { // ensures click is not on an OPEN or MATCHED card
         if (e.target.nodeName == 'LI') { // make sure click is on li-item
             if (numberOfClicksMade == 0) { // start timer
@@ -157,8 +157,8 @@ function myTimer() {
  * @param {*} openList Array holding two cards that are currently open
  */
 function checkMatch(openList) {
-    var item1 = openList[0];
-    var item2 = openList[1];    
+    let item1 = openList[0];
+    let item2 = openList[1];    
     if (openList[0].className == openList[1].className) { // CARDS MATCH
         openList[0].parentElement.setAttribute('class', 'card match');
         openList[1].parentElement.setAttribute('class', 'card match');
@@ -188,7 +188,7 @@ function winGame() {
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -223,7 +223,7 @@ function createNewDeck(incomingDeck) {
 
 // This function deletes the old deck from the screen
 function deleteOldDeck() {
-    var empty = deckClass.innerHTML = null;
+    let empty = deckClass.innerHTML = null;
     console.log(empty);
 }
 
